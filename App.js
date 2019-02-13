@@ -1,7 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
-import { StyleSheet, Text, View } from 'react-native';
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation'
 import Home from './components/Home'
 import Settings from './components/Settings'
@@ -23,12 +22,3 @@ export default class App extends React.Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-})

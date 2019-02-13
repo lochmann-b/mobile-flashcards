@@ -1,15 +1,19 @@
 import React, { Component } from 'react'
-import { Text, View } from 'react-native'
-import PropTypes from 'prop-types'
+import { createStackNavigator } from 'react-navigation'
+import { Text, View, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
+import Deck from './Deck'
+
 
 export class Home extends Component {
   render() {
     return (
       <View>
-          <Text>
-              Decks
-          </Text>
+          <TouchableOpacity onPress={ () => {this.props.navigation.navigate('Deck', {deck:'Deck1'})}}>
+            <Text>
+              Go to Deck 1
+            </Text>
+          </TouchableOpacity>
       </View>
     )
   }
@@ -23,4 +27,9 @@ const mapDispatchToProps = {
   
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+export default createStackNavigator(
+  {
+    Home: connect(mapStateToProps, mapDispatchToProps)(Home),
+    Deck: Deck
+
+  })
