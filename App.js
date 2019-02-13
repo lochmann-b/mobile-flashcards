@@ -1,13 +1,26 @@
 import React from 'react';
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
 import { StyleSheet, Text, View } from 'react-native';
+import { createBottomTabNavigator, createAppContainer } from 'react-navigation'
+import Home from './components/Home'
+import Settings from './components/Settings'
+import reducer from './reducers'
+
+const Tabs = createBottomTabNavigator({
+  Home: Home,
+  Settings: Settings
+})
+
 
 export default class App extends React.Component {
   render() {
+    const TabsContainer = createAppContainer(Tabs)
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
-    );
+      <Provider store={createStore(reducer)}>
+        <TabsContainer />
+      </Provider>
+    )
   }
 }
 
@@ -18,4 +31,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+})
