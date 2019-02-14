@@ -1,5 +1,6 @@
-function decks (state = {}, action){
-    return state
-}
+import { combineReducers } from 'redux'
+import decks from './decks'
 
-export default decks
+export default combineReducers({
+    decks
+})

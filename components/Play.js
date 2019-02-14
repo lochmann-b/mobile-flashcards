@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native'
+import { View, Text } from 'react-native'
 
-class DeleteCard extends Component {
+class Play extends Component {
     render() {
         return (
             <View>
                 <Text>
-                    Delete a card
+                    Play
                 </Text>
             </View>
         );
     }
 }
 
-export default DeleteCard;
+export default Play;

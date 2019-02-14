@@ -2,34 +2,37 @@ import React, { Component } from 'react'
 import { createStackNavigator } from 'react-navigation'
 import { Text, View, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
-import Deck from './Deck'
+import { handleLoadDummyDecks } from '../actions/decks'
 
 
 export class Home extends Component {
+
+  componentDidMount() {
+    const { dispatch } = this.props
+    dispatch(handleLoadDummyDecks())
+  }
+
+
   render() {
+    const { decks } = this.props
     return (
-      <View>
-          <TouchableOpacity onPress={ () => {this.props.navigation.navigate('Deck', {deck:'Deck1'})}}>
+      Object.keys(decks).map(
+        key => (<View key={key}>
+          <TouchableOpacity onPress={() => { this.props.navigation.navigate('Deck', { deckId: key }) }}>
             <Text>
-              Go to Deck 1
+              Go to Deck {key}
             </Text>
           </TouchableOpacity>
-      </View>
+        </View>)
+      )
     )
   }
 }
 
-const mapStateToProps = (state) => ({
-  
-})
-
-const mapDispatchToProps = {
-  
+function mapStateToProps({ decks }) {
+  return {
+    decks
+  }
 }
 
-export default createStackNavigator(
-  {
-    Home: connect(mapStateToProps, mapDispatchToProps)(Home),
-    Deck: Deck
-
-  })
+export default connect(mapStateToProps)(Home)
