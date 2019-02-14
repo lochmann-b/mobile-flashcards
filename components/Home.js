@@ -3,6 +3,8 @@ import { createStackNavigator } from 'react-navigation'
 import { Text, View, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { handleLoadDummyDecks } from '../actions/decks'
+import styles from '../styles';
+import DeckTile from './DeckTile'
 
 
 export class Home extends Component {
@@ -16,15 +18,13 @@ export class Home extends Component {
   render() {
     const { decks } = this.props
     return (
-      Object.keys(decks).map(
-        key => (<View key={key}>
-          <TouchableOpacity onPress={() => { this.props.navigation.navigate('Deck', { deckId: key }) }}>
-            <Text>
-              Go to Deck {key}
-            </Text>
-          </TouchableOpacity>
-        </View>)
-      )
+      <View style={styles.cardTable}>
+        {
+          Object.keys(decks).map(
+            key => (<DeckTile  id={key} key={key} />)
+          )
+        }
+      </View>
     )
   }
 }
