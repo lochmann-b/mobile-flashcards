@@ -4,5 +4,5 @@ import { applyMiddleware } from 'redux'
 
 export default applyMiddleware(
     thunk,
-  //rr  logger,
+    logger,
 )

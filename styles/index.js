@@ -45,7 +45,17 @@ const styles = StyleSheet.create({
   listContent: {
     flexGrow: 1,
     justifyContent: 'center'
+  },
+
+  question: {
+    alignSelf: 'center'
+  },
+
+  answer: {
+    alignSelf: 'center'
   }
+
+
 
 });
 

@@ -3,13 +3,6 @@ import { connect } from 'react-redux';
 import { Text, TouchableOpacity, StyleSheet } from 'react-native'
 import styles from '../styles'
 
-function mapStateToProps(state, { id }) {
-    const { decks } = state
-    return {
-        deck: decks[id],
-    }
-}
-
 class DeckTile extends Component {
     render() {
         const { deck, onPress } = this.props
@@ -38,5 +31,12 @@ const localStyles = StyleSheet.create({
         paddingTop: 20
     },
 })
+
+function mapStateToProps(state, { id }) {
+    const { decks } = state
+    return {
+        deck: decks[id],
+    }
+}
 
 export default connect(mapStateToProps)(DeckTile);
