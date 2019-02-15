@@ -16,7 +16,7 @@ export class Home extends Component {
 
   renderDeckTile = (key) => {
     return (
-      <View style={{ flex: 1, alignSelf: 'center' }}>
+      <View style={{  }}>
         <DeckTile id={key} onPress={() => this.props.navigation.navigate('Deck', { deckId: key })} />
         <View style={{ marginBottom: 10, flexDirection: 'row', justifyContent: 'center' }}>
           <TextButton style={styles.editButton}>Edit</TextButton>
@@ -36,10 +36,9 @@ export class Home extends Component {
       </View>
     }
     return (
-      <View style={styles.cardTable}>
-        <Text style={styles.title}>Choos a deck</Text>
+      <View style={styles.cardTable}>        
         <FlatList
-          contentContainerStyle={styles.decksList}
+          contentContainerStyle={styles.listContent}
           data={listData}
           renderItem={({ item }) => this.renderDeckTile(item.key)}
         />

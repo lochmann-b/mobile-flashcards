@@ -15,18 +15,16 @@ const styles = StyleSheet.create({
 
   cardTable: {
     flex: 1,
-    justifyContent: 'flex-start',
     alignItems: 'center',
     padding: 20,
     backgroundColor: moss,
   },
 
   card: {
-    alignItems: 'center',
-    flex: 1,
-    alignSelf: 'center',
     backgroundColor: white,
-    padding: 20,
+    paddingLeft: 10,
+    paddingRight: 10,
+    margin: 10,
     aspectRatio: 63 / 88, //poker card
     width: 150,
     borderRadius: 10,
@@ -44,7 +42,7 @@ const styles = StyleSheet.create({
     marginRight: 15
   },
 
-  cardsList: {
+  listContent: {
     flexGrow: 1,
     justifyContent: 'center'
   }
