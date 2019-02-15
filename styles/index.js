@@ -6,6 +6,13 @@ const gray = '#696972'
 const red = '#ff0000'
 
 const styles = StyleSheet.create({
+
+    title: {
+      color: white,
+      fontSize: 20,      
+      margin: 5
+    },
+
     cardTable: {
       flex: 1,
       justifyContent: 'flex-start',
@@ -14,13 +21,14 @@ const styles = StyleSheet.create({
       backgroundColor: moss,
     },
 
-    card: {
+    card: {   
+      alignItems:'center',   
       flex: 1,
-      alignItems: 'center',
-      backgroundColor: white,
+      alignSelf: 'center',
+      backgroundColor: white,      
       padding: 20,
-      margin: 20,
       aspectRatio: 63/88, //poker card
+      width: 150,
       borderRadius: 10,
       borderColor: gray,
       borderWidth: 1,
