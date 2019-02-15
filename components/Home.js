@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Text, View, FlatList } from 'react-native'
+import { Text, View, FlatList, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import { handleLoadDummyDecks } from '../actions/decks'
-import styles from '../styles';
+import styles from '../styles'
 import DeckTile from './DeckTile'
 import TextButton from './TextButton';
 
@@ -19,8 +19,8 @@ export class Home extends Component {
       <View style={{ flex: 1, alignSelf: 'center' }}>
         <DeckTile id={key} onPress={() => this.props.navigation.navigate('Deck', { deckId: key })} />
         <View style={{ marginBottom: 10, flexDirection: 'row', justifyContent: 'center' }}>
-          <TextButton style={{ color: '#ffffff', paddingRight: 15 }}>Edit</TextButton>
-          <TextButton style={{ color: '#ffffff', paddingLeft: 15 }}>Delete</TextButton>
+          <TextButton style={styles.editButton}>Edit</TextButton>
+          <TextButton style={styles.deleteButton}>Delete</TextButton>
         </View>
       </View>
     )
@@ -39,7 +39,7 @@ export class Home extends Component {
       <View style={styles.cardTable}>
         <Text style={styles.title}>Choos a deck</Text>
         <FlatList
-          contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
+          contentContainerStyle={styles.decksList}
           data={listData}
           renderItem={({ item }) => this.renderDeckTile(item.key)}
         />
@@ -53,5 +53,6 @@ function mapStateToProps({ decks }) {
     decks
   }
 }
+
 
 export default connect(mapStateToProps)(Home)

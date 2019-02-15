@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Text, View, TouchableOpacity } from 'react-native'
-import { withNavigation } from 'react-navigation'
+import { Text, TouchableOpacity, StyleSheet } from 'react-native'
 import styles from '../styles'
 
 function mapStateToProps(state, { id }) {
@@ -16,15 +15,28 @@ class DeckTile extends Component {
         const { deck, onPress } = this.props
         return (
             <TouchableOpacity style={styles.card} onPress={onPress}>
-                <Text style={{ alignSelf: 'center', fontSize: 15, fontWeight: 'bold' }}>
+                <Text style={localStyles.deckTitle}>
                     {deck.title}
                 </Text>
-                <Text style={{ alignSelf: 'center', paddingTop: 20 }}>
+                <Text style={localStyles.numOfCards}>
                     {`${Object.keys(deck.cards).length} cards`}
                 </Text>
             </TouchableOpacity>
         );
     }
 }
+
+const localStyles = StyleSheet.create({
+    deckTitle: {
+        alignSelf: 'center',
+        fontSize: 15,
+        fontWeight: 'bold'
+    },
+
+    numOfCards: {
+        alignSelf: 'center',
+        paddingTop: 20
+    },
+})
 
 export default connect(mapStateToProps)(DeckTile);
