@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native'
+import { Text, View, SafeAreaView, StatusBar } from 'react-native'
+import { Constants } from 'expo'
 
 class DeleteDeck extends Component {
     render() {
         return (
-            <View>
-                <Text>
-                    Delete a deck
-                </Text>
-            </View>
+            <SafeAreaView style={{ flex: 1, marginTop:Constants.statusBarHeight }}>
+                 <Text>Delete Card</Text>
+            </SafeAreaView>
         );
     }
 }
