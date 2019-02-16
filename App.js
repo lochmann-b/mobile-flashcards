@@ -6,7 +6,7 @@ import Home from './components/Home'
 import Settings from './components/Settings'
 import reducer from './reducers'
 import middleware from './middleware'
-import { StatusBar, View, SafeAreaView } from 'react-native'
+import { SafeAreaView } from 'react-native'
 import { Constants } from 'expo'
 
 import Deck from './components/Deck'
@@ -18,15 +18,12 @@ import CreateDeck from './components/CreateDeck'
 import DeleteCard from './components/DeleteCard'
 
 
-const wrapStatusBar = (ToWrap) => {
+const addMarginTop = (ToWrap) => {
   return class UpperCaseComponent extends React.Component {
     render() {
       return (
-        <SafeAreaView style={{ flex: 1 }}>
-          <View style={{ backgroundColor: '#ff0f0f', height: Constants.statusBarHeight }}>
-            <StatusBar translucent backgroundColor='#ff0f0f' {...this.props} />
+        <SafeAreaView  style={{ flex: 1, marginTop:Constants.statusBarHeight }}>
             <ToWrap {...this.props} />
-          </View>
         </SafeAreaView>
 
       )
@@ -48,7 +45,7 @@ const HomeStack = createStackNavigator(
 
 const ModalStack = createStackNavigator({
   HomeStack: HomeStack,
-  DeleteDeck: DeleteDeck
+  DeleteDeck: addMarginTop(DeleteDeck)
 }, {
     mode: 'modal',
     headerMode: 'none'
@@ -57,7 +54,7 @@ const ModalStack = createStackNavigator({
 
 const Tabs = createBottomTabNavigator({
   Home: ModalStack,
-  Settings: wrapStatusBar(Settings)
+  Settings: addMarginTop(Settings)
 })
 
 
