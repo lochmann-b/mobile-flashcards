@@ -32,6 +32,7 @@ const addMarginTop = (ToWrap) => {
 }
 
 
+
 const HomeStack = createStackNavigator(
   {
     Home: Home,
@@ -43,8 +44,14 @@ const HomeStack = createStackNavigator(
     EditDeck: EditDeck
   })
 
+  const Tabs = createBottomTabNavigator({
+    Home: HomeStack,
+    Settings: addMarginTop(Settings)
+  })
+
+  
 const ModalStack = createStackNavigator({
-  HomeStack: HomeStack,
+  HomeStack: Tabs,
   DeleteDeck: addMarginTop(DeleteDeck)
 }, {
     mode: 'modal',
@@ -52,10 +59,6 @@ const ModalStack = createStackNavigator({
   })
 
 
-const Tabs = createBottomTabNavigator({
-  Home: ModalStack,
-  Settings: addMarginTop(Settings)
-})
 
 
 
@@ -63,7 +66,7 @@ const Tabs = createBottomTabNavigator({
 export default class App extends React.Component {
 
   render() {
-    const TabsContainer = createAppContainer(Tabs)
+    const TabsContainer = createAppContainer(ModalStack)
     return (
       <Provider store={createStore(reducer, middleware)}>
         <TabsContainer />

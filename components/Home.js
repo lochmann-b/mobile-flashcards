@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, FlatList, ActivityIndicator, TouchableOpacity, Platform} from 'react-native'
+import { View, FlatList, ActivityIndicator, TouchableOpacity, Platform, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import { handleLoadDecks, handleLoadDummyDecks } from '../actions/decks'
 import { Ionicons } from '@expo/vector-icons'
@@ -28,7 +28,7 @@ export class Home extends Component {
   }
 
   componentDidMount() {
-    this.props.navigation.setParams({addDeck: this.addDeck})
+    this.props.navigation.setParams({ addDeck: this.addDeck })
 
     const { dispatch } = this.props
     dispatch(handleLoadDecks())
@@ -40,8 +40,28 @@ export class Home extends Component {
             dispatch(handleLoadDummyDecks())
           }
         }
-
       )
+  }
+
+  handleOnDelete = deckId => {
+    /*const { navigate } = this.props.navigation
+    navigate('DeleteDeck', { deckId }) */
+    Alert.alert('Delete Deck',
+      `Would you really delete deck ${deckId}?`,
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'Delete',
+          onPress: () => console.log('Ask me later pressed'),
+          style: 'destructive'
+        },
+      ],
+      { cancelable: false },
+    );
   }
 
   renderDeckTile = (key) => {
@@ -51,7 +71,7 @@ export class Home extends Component {
         <DeckTile id={key} onPress={() => navigate('Deck', { deckId: key })} />
         <View style={{ marginBottom: 10, flexDirection: 'row', justifyContent: 'center' }}>
           <TextButton onPress={() => navigate('EditDeck', { deckId: key })} style={styles.editButton}>Edit</TextButton>
-          <TextButton onPress={() => navigate('DeleteDeck', { deckId: key })} style={styles.deleteButton}>Delete</TextButton>
+          <TextButton onPress={() => this.handleOnDelete(key)} style={styles.deleteButton}>Delete</TextButton>
         </View>
       </View>
     )
