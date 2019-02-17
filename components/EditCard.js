@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { TextInput, Text, View } from 'react-native'
 import { connect } from 'react-redux'
-import { getDeckIdFromCardId } from '../utils/helpers'
 import TextButton from './TextButton';
-import { handleUpdateCard } from '../actions/decks'
+import { handleUpdateCard } from '../actions/cards'
 
 class EditCard extends Component {
 
@@ -26,7 +25,10 @@ class EditCard extends Component {
         .then(() => {
             navigation.goBack()
         })
-        .catch(e => alert('Could not update card'))
+        .catch(e => {
+            console.log('Could not update card', e)
+            alert('Could not update card')}
+        )
 
     }
    
@@ -49,10 +51,9 @@ class EditCard extends Component {
     }
 }
 
-function mapStateToProps({ decks }, { navigation }) {
+function mapStateToProps({ cards }, { navigation }) {
     const cardId = navigation.getParam('cardId');
-    const deckId = getDeckIdFromCardId(cardId)
-    const card = decks[deckId].cards[cardId];
+    const card = cards[cardId];
     return {
         card: card
     }

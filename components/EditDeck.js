@@ -12,14 +12,14 @@ class EditDeck extends Component {
         }
     }
 
-    renderCardTile = (key) => {
+    renderCardTile = (cardId) => {
         const { navigate } = this.props.navigation
         return (
             <View style={{}}>
-                <CardTile cardId={key} />
+                <CardTile cardId={cardId} />
                 <View style={{ marginBottom: 10, flexDirection: 'row', justifyContent: 'center' }}>
-                    <TextButton onPress={() => navigate('EditCard', { cardId: key })} style={styles.editButton}>Edit</TextButton>
-                    <TextButton onPress={() => navigate('DeleteCard', { cardId: key })} style={styles.deleteButton}>Delete</TextButton>
+                    <TextButton onPress={() => navigate('EditCard', { cardId: cardId})} style={styles.editButton}>Edit</TextButton>
+                    <TextButton onPress={() => navigate('DeleteCard', { cardId: cardId, deckId: deckId })} style={styles.deleteButton}>Delete</TextButton>
                 </View>
             </View>
         )
@@ -27,14 +27,14 @@ class EditDeck extends Component {
 
     render() {
         const { deck } = this.props
-        const listData = deck.cards ? Object.keys(deck.cards).sort().map(key => ({ key })) : []
+        const listData = deck.cards.map(key => ({ key }))
 
         return (
             <View style={styles.cardTable}>
                 <FlatList
                     contentContainerStyle={styles.listContent}
                     data={listData}
-                    renderItem={({ item }) => this.renderCardTile(item.key)}
+                    renderItem={({ item }) => this.renderCardTile(item.key, deck.id)}
                 />
             </View>
         )
@@ -47,7 +47,7 @@ function mapStateToProps( { decks }, { navigation }) {
     const deckId = navigation.getParam('deckId');
     const deck = decks[deckId]
     return {
-        deck: deck,
+        deck,
     }
 }
 export default connect(mapStateToProps)(EditDeck);

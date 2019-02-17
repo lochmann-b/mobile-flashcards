@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Text, View } from 'react-native'
-import { getDeckIdFromCardId} from '../utils/helpers'
 import styles from '../styles'
 
 class CardTile extends Component {
@@ -21,11 +20,10 @@ class CardTile extends Component {
 }
 
 
-function mapStateToProps( { decks }, { cardId }) {
-    const deckId = getDeckIdFromCardId(cardId)
-    const card = decks[deckId].cards[cardId];
+function mapStateToProps( { cards }, { cardId }) {
+    const card = cards[cardId];
     return {
-        card: card
+        card
     };
 }
 

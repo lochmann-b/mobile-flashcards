@@ -1,7 +1,8 @@
-
+import { normalizeDecks } from './helpers'
 
 export function formatDecks(decks) {
-    return JSON.parse(decks)
+    //returns a normalized representation of the decks
+    return normalizeDecks(JSON.parse(decks))
 }
 
 export function generateInitialData() {
