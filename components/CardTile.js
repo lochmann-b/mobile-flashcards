@@ -1,31 +1,19 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 import { Text, View } from 'react-native'
 import styles from '../styles'
 
-class CardTile extends Component {
-    render() {
-        const { card } = this.props
-        return (
-            <View style={styles.card} >
-                <Text style={styles.question}>
-                    {card.question}
-                </Text>
-                <Text style={styles.answer}>
-                    {card.answer}
-                </Text>
-            </View>
-        );
-    }
+const CardTile = (props) => {
+    const { question, answer } = props
+    return (
+        <View style={styles.card} >
+            <Text style={styles.question}>
+                {question}
+            </Text>
+            <Text style={styles.answer}>
+                {answer}
+            </Text>
+        </View>
+    )
 }
 
-
-function mapStateToProps( { cards }, { cardId }) {
-    const card = cards[cardId];
-    return {
-        card
-    };
-}
-
-
-export default connect(mapStateToProps)(CardTile);
+export default CardTile;
