@@ -25,19 +25,19 @@ export class Home extends Component {
   }
 
   addDeck = () => {
-    const { navigation, dispatch } = this.props
-    navigation.navigate('CreateDeck', { onAddDeck: deckTitle => dispatch(handleAddDeck(deckTitle)) })
+    const { navigation, dispatchAddDeck } = this.props
+    navigation.navigate('CreateDeck', { onAddDeck: deckTitle => dispatchAddDeck(deckTitle) })
   }
 
   componentDidMount() {
     this.props.navigation.setParams({ addDeck: this.addDeck })
-    const { dispatch } = this.props
+    const { dispatchLoadDummyDecks, dispatchLoadDecks } = this.props
     //reset().then(() => {
-    dispatch(handleLoadDecks())
+    dispatchLoadDecks()
       .then(
         () => {
           if (Object.keys(this.props.decks).length === 0) {
-            dispatch(handleLoadDummyDecks())
+            dispatchLoadDummyDecks()
           }
         }
       )
@@ -48,9 +48,9 @@ export class Home extends Component {
 
 
   handleOnDelete = deckId => {
-    const { decks, dispatch} = this.props
+    const { decks, dispatchDeleteDeck } = this.props
     Alert.alert('Delete Deck',
-      `Would you really delete deck ${deckId}?`,
+      `Really delete deck ${decks[deckId].title}?`,
       [
         {
           text: 'Cancel',
@@ -59,7 +59,7 @@ export class Home extends Component {
         },
         {
           text: 'Delete',
-          onPress: () => dispatch(handleDeleteDeck(decks[deckId])),
+          onPress: () => dispatchDeleteDeck(decks[deckId]),
           style: 'destructive'
         },
       ],
@@ -111,5 +111,13 @@ function mapStateToProps({ decks }) {
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return ({
+    dispatchLoadDummyDecks: () => dispatch(handleLoadDummyDecks()),
+    dispatchLoadDecks: () => dispatch(handleLoadDecks()),
+    dispatchAddDeck: (title) => dispatch(handleAddDeck(title)),
+    dispatchDeleteDeck: (deck) => dispatch(handleDeleteDeck(deck))
+  })
+}
 
-export default connect(mapStateToProps)(Home)
+export default connect(mapStateToProps, mapDispatchToProps)(Home)
