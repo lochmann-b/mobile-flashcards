@@ -55,6 +55,16 @@ export function saveDeck(title) {
     return AsyncStorage.mergeItem(STORAGE_KEY, JSON.stringify({ [deck.id]: deck })).then(() => deck)
 }
 
+export function removeDeck(deckId){
+    return AsyncStorage.getItem(STORAGE_KEY)
+    .then(result => {
+        const decks = JSON.parse(result)
+        decks[deckId] = undefined
+        delete decks[deckId]
+        AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(decks))
+    })
+}
+
 /*
 
 export function removeEntry(key) {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, FlatList, ActivityIndicator, TouchableOpacity, Platform, Alert } from 'react-native'
 import { connect } from 'react-redux'
-import { handleLoadDecks, handleLoadDummyDecks, handleAddDeck } from '../actions/decks'
+import { handleLoadDecks, handleLoadDummyDecks, handleAddDeck, handleDeleteDeck } from '../actions/decks'
 import { Ionicons } from '@expo/vector-icons'
 import styles from '../styles'
 import white from '../styles'
@@ -48,6 +48,7 @@ export class Home extends Component {
 
 
   handleOnDelete = deckId => {
+    const { decks, dispatch} = this.props
     Alert.alert('Delete Deck',
       `Would you really delete deck ${deckId}?`,
       [
@@ -58,7 +59,7 @@ export class Home extends Component {
         },
         {
           text: 'Delete',
-          onPress: () => console.log('Ask me later pressed'),
+          onPress: () => dispatch(handleDeleteDeck(decks[deckId])),
           style: 'destructive'
         },
       ],

@@ -1,9 +1,8 @@
-import { loadInitialData, getAllDecks, updateCardWithId, saveDeck } from '../utils/api'
+import { loadInitialData, getAllDecks, updateCardWithId, saveDeck, removeDeck } from '../utils/api'
 
 export const RECEIVE_DECKS = 'RECEIVE_DECK'
-export const ADD_DECK = 'ADD_DECKS'
-
-
+export const ADD_DECK = 'ADD_DECK'
+export const DELETE_DECK = 'DELETE_DECK'
 
 function receiveDecks(decks) {
     return {
@@ -13,10 +12,17 @@ function receiveDecks(decks) {
 }
 
 function addDeck(deck) {
-        return {
-            type: ADD_DECK,
-            deck
-        }
+    return {
+        type: ADD_DECK,
+        deck
+    }
+}
+
+function deleteDeck(deck) {
+    return {
+        type: DELETE_DECK,
+        deck
+    }
 }
 
 export function handleLoadDecks() {
@@ -44,6 +50,13 @@ export function handleUpdateCard(cardId, question, answer) {
 export function handleAddDeck(deckTitle) {
     return dispatch => {
         return saveDeck(deckTitle)
-        .then( deck => dispatch(addDeck(deck)))
+            .then(deck => dispatch(addDeck(deck)))
+    }
+}
+
+export function handleDeleteDeck(deck) {
+    return dispatch => {
+        return removeDeck(deck.id)
+            .then(dispatch(deleteDeck(deck)))
     }
 }
