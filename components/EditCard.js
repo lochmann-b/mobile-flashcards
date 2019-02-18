@@ -6,7 +6,7 @@ import { handleUpdateCard } from '../actions/cards'
 
 class EditCard extends Component {
 
-    state= {
+    state = {
         question: this.props.card ? this.props.card.question : '',
         answer: this.props.card ? this.props.card.answer : '',
     }
@@ -22,16 +22,15 @@ class EditCard extends Component {
         const { dispatch, card, navigation } = this.props
         const { question, answer } = this.state
         dispatch(handleUpdateCard(card.id, question, answer))
-        .then(() => {
-            navigation.goBack()
-        })
-        .catch(e => {
-            console.log('Could not update card', e)
-            alert('Could not update card')}
-        )
-
+            .then(() => {
+                navigation.goBack()
+            })
+            .catch(e => {
+                console.log('Could not update card', e)
+                alert('Could not update card')
+            })
     }
-   
+
     render() {
         const { question, answer } = this.state
 
@@ -40,11 +39,11 @@ class EditCard extends Component {
                 <Text>
                     Question
                 </Text>
-                <TextInput placeholder='Enter Question' value={question} onChangeText={ txt => this.onTextChanged('question', txt)}/>
+                <TextInput placeholder='Enter Question' value={question} onChangeText={txt => this.onTextChanged('question', txt)} />
                 <Text>
                     Answer
                 </Text>
-                <TextInput placeholder='Enter Answer' name='answer' value={answer} onChangeText={ txt => this.onTextChanged('answer', txt)}/>
+                <TextInput placeholder='Enter Answer' name='answer' value={answer} onChangeText={txt => this.onTextChanged('answer', txt)} />
                 <TextButton onPress={this.handleUpdate}> Done</TextButton>
             </View>
         );

@@ -1,4 +1,4 @@
-import { RECEIVE_DECKS } from '../actions/decks'
+import { RECEIVE_DECKS, ADD_DECK } from '../actions/decks'
 import { UPDATE_CARD } from '../actions/cards'
 
 export default function decks(state = {}, action) {
@@ -9,6 +9,10 @@ export default function decks(state = {}, action) {
             return {
                 ...state,
                 [action.card.id]: { ...action.card }
+            }
+        case ADD_DECK:
+            return {
+                ...state, ...action.deck.cards
             }
         default:
             return state

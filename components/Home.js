@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import { View, FlatList, ActivityIndicator, TouchableOpacity, Platform, Alert } from 'react-native'
 import { connect } from 'react-redux'
-import { handleLoadDecks, handleLoadDummyDecks } from '../actions/decks'
+import { handleLoadDecks, handleLoadDummyDecks, handleAddDeck } from '../actions/decks'
 import { Ionicons } from '@expo/vector-icons'
 import styles from '../styles'
 import white from '../styles'
 import DeckTile from './DeckTile'
 import TextButton from './TextButton';
+
+import { reset } from '../utils/api' // TODO remove
 
 
 export class Home extends Component {
@@ -23,29 +25,29 @@ export class Home extends Component {
   }
 
   addDeck = () => {
-    const { navigation } = this.props
-    navigation.navigate('CreateDeck')
+    const { navigation, dispatch } = this.props
+    navigation.navigate('CreateDeck', { onAddDeck: deckTitle => dispatch(handleAddDeck(deckTitle)) })
   }
 
   componentDidMount() {
     this.props.navigation.setParams({ addDeck: this.addDeck })
-
     const { dispatch } = this.props
-    dispatch(handleLoadDecks())
-      .then(
-        () => {
-
-          if (Object.keys(this.props.decks).length === 0) {
-            console.log('decks', this.props.decks)
-            dispatch(handleLoadDummyDecks())
+    //reset().then(() => {
+      dispatch(handleLoadDecks())
+        .then(
+          () => {
+            if (Object.keys(this.props.decks).length === 0) {
+              dispatch(handleLoadDummyDecks())
+            }
           }
-        }
-      )
+        )
+
+
+ //})
   }
 
+
   handleOnDelete = deckId => {
-    /*const { navigate } = this.props.navigation
-    navigate('DeleteDeck', { deckId }) */
     Alert.alert('Delete Deck',
       `Would you really delete deck ${deckId}?`,
       [
@@ -79,7 +81,7 @@ export class Home extends Component {
 
   render() {
     const { decks } = this.props
-    const listData = decks ? Object.keys(decks).sort().map(key => ({ key })) : []
+    const listData = decks ? Object.keys(decks).sort((a, b) => decks[b].timestamp - decks[a].timestamp).map(key => ({ key })) : []
 
     if (listData.length === 0) {
       return <View style={styles.cardTable}>
