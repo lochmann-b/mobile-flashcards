@@ -1,42 +1,20 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Text, TouchableOpacity, StyleSheet } from 'react-native'
+import React from 'react';
+
+import { Text, TouchableOpacity } from 'react-native'
 import styles from '../styles'
 
-class DeckTile extends Component {
-    render() {
-        const { deck, onPress } = this.props
-        return (
-            <TouchableOpacity style={styles.card} onPress={onPress}>
-                <Text style={localStyles.deckTitle}>
-                    {deck.title}
-                </Text>
-                <Text style={localStyles.numOfCards}>
-                    {`${Object.keys(deck.cards).length} cards`}
-                </Text>
-            </TouchableOpacity>
-        );
-    }
+const DeckTile = (props) => {
+    const { title, numOfCards, onPress } = props
+    return (
+        <TouchableOpacity style={styles.card} onPress={onPress}>
+            <Text style={styles.deckTitle}>
+                {title}
+            </Text>
+            <Text style={styles.numOfCards}>
+                { `${numOfCards} cards` }
+            </Text>
+        </TouchableOpacity>
+    )
 }
 
-const localStyles = StyleSheet.create({
-    deckTitle: {
-        alignSelf: 'center',
-        fontSize: 15,
-        fontWeight: 'bold'
-    },
-
-    numOfCards: {
-        alignSelf: 'center',
-        paddingTop: 20
-    },
-})
-
-function mapStateToProps(state, { id }) {
-    const { decks } = state
-    return {
-        deck: decks[id],
-    }
-}
-
-export default connect(mapStateToProps)(DeckTile);
+export default DeckTile

@@ -6,7 +6,7 @@ import { Ionicons } from '@expo/vector-icons'
 import styles from '../styles'
 import white from '../styles'
 import DeckTile from './DeckTile'
-import TextButton from './TextButton';
+import EditableListItem from './EditableListItem'
 
 import { reset } from '../utils/api' // TODO remove
 
@@ -33,17 +33,17 @@ export class Home extends Component {
     this.props.navigation.setParams({ addDeck: this.addDeck })
     const { dispatch } = this.props
     //reset().then(() => {
-      dispatch(handleLoadDecks())
-        .then(
-          () => {
-            if (Object.keys(this.props.decks).length === 0) {
-              dispatch(handleLoadDummyDecks())
-            }
+    dispatch(handleLoadDecks())
+      .then(
+        () => {
+          if (Object.keys(this.props.decks).length === 0) {
+            dispatch(handleLoadDummyDecks())
           }
-        )
+        }
+      )
 
 
- //})
+    //})
   }
 
 
@@ -68,16 +68,20 @@ export class Home extends Component {
 
   renderDeckTile = (key) => {
     const { navigate } = this.props.navigation
+    const { decks } = this.props
     return (
-      <View style={{}}>
-        <DeckTile id={key} onPress={() => navigate('Deck', { deckId: key })} />
-        <View style={{ marginBottom: 10, flexDirection: 'row', justifyContent: 'center' }}>
-          <TextButton onPress={() => navigate('EditDeck', { deckId: key })} style={styles.editButton}>Edit</TextButton>
-          <TextButton onPress={() => this.handleOnDelete(key)} style={styles.deleteButton}>Delete</TextButton>
-        </View>
-      </View>
+      <EditableListItem
+        onEdit={() => navigate('EditDeck', { deckId: key })}
+        onDelete={() => this.handleOnDelete(key)}>
+        <DeckTile
+          title={decks[key].title}
+          numOfCards={decks[key].cards.length}
+          onPress={() => navigate('Deck', { deckId: key })}
+        />
+      </EditableListItem>
     )
   }
+
 
   render() {
     const { decks } = this.props

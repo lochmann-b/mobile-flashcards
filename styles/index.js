@@ -32,6 +32,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
 
+  deckTitle: {
+    alignSelf: 'center',
+    fontSize: 15,
+    fontWeight: 'bold'
+  },
+
+  numOfCards: {
+    alignSelf: 'center',
+    paddingTop: 20
+  },
+
   deleteButton: {
     color: white,
     marginLeft: 15
