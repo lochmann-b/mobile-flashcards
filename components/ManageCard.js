@@ -40,13 +40,13 @@ class ManageCard extends Component {
 
     render() {
         const { question, answer } = this.state
-
+        const { card } = this.props
         return (
             <View style={styles.form}>
                 <TextInput placeholder='Enter Question' value={question} onChangeText={txt => this.onTextChanged('question', txt)} style={[styles.input, {flex:0}]} />
                 <TextInput placeholder='Enter Answer' name='answer' value={answer} onChangeText={txt => this.onTextChanged('answer', txt)} style={[styles.input, {flex:0}]} />
                 <View style={{alignSelf: 'center',  margin: 20 }}>
-                    <Button title='Create card' onPress={this.handleSubmit}/>
+                    <Button title={card ? 'Update card' : 'Create card'} onPress={this.handleSubmit}/>
                 </View>
             </View>
         );

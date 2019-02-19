@@ -9,6 +9,10 @@ class CreateDeck extends Component {
         deckTitle: ''
     }
 
+    static navigationOptions = {
+        title: 'Create Deck'
+    }
+
     onTextChanged = deckTitle => {
         this.setState({
             deckTitle

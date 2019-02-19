@@ -108,9 +108,7 @@ class EditDeck extends Component {
                         renderItem={({ item }) => this.renderCardTile(item.key, deck.id)}
                     />
                 </View>
-            </View>
-            
-
+            </View>            
         )
     }
 }

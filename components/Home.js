@@ -71,7 +71,7 @@ export class Home extends Component {
         <DeckTile
           title={decks[key].title}
           numOfCards={cards.length}
-          onPress={() => navigate('Deck', { deckId: key })}
+          onPress={() => navigate('Play', { deckId: key, deckTitle: decks[key].title })}
         />
       </EditableListItem>
     )

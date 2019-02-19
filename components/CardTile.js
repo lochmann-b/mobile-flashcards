@@ -3,15 +3,15 @@ import { Text, View } from 'react-native'
 import styles from '../styles'
 
 const CardTile = (props) => {
-    const { question, answer } = props
+    const { question, answer, faceUp = true } = props
     return (
         <View style={styles.card} >
             <Text style={styles.question}>
                 {question}
             </Text>
-            <Text style={styles.answer}>
+            {faceUp && <Text style={styles.answer}>
                 {answer}
-            </Text>
+            </Text>}
         </View>
     )
 }

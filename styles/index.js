@@ -21,10 +21,26 @@ const styles = StyleSheet.create({
     backgroundColor: moss,
   },
 
+  textButton: {
+    color: black,
+    padding: 10,
+    borderColor: white,
+    margin: 2,
+    width: 120,
+    borderWidth: 1,
+    borderRadius: 2
+  },
+
   cardTable: {
     flex: 1,
     alignItems: 'center',
     padding: 20,
+    backgroundColor: moss,
+  },
+
+  center: {
+    flex: 1,
+    alignItems: 'center',
     backgroundColor: moss,
   },
 
@@ -82,7 +98,7 @@ const styles = StyleSheet.create({
     padding: 5,
     margin: 5,
     color: white,   
-  }
+  },
 });
 
 export default styles
