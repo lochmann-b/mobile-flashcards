@@ -85,6 +85,14 @@ export function createCard(deckId, question, answer) {
         }).then( () => newCard)
 }
 
+export function changeDeckTitle(deckId, title){
+    deck = {
+        title,
+        id: deckId
+    }
+    return AsyncStorage.mergeItem(STORAGE_KEY, JSON.stringify({ [deck.id]: deck }))
+}
+
 /*
 
 export function removeEntry(key) {

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Text, TextInput, View, Button} from 'react-native'
+import DeckTitle from './DeckTitle'
+import { View } from 'react-native'
+import styles from '../styles';
 
 class CreateDeck extends Component {
 
@@ -14,25 +16,21 @@ class CreateDeck extends Component {
     }
 
     handleUpdate = () => {
-        const { navigation } =  this.props
+        const { navigation } = this.props
         const onAddDeck = navigation.getParam('onAddDeck')
-        const  { deckTitle } = this.state
-        
+        const { deckTitle } = this.state
+
         onAddDeck(deckTitle)
-        .then(() => navigation.goBack())
+            .then(() => navigation.goBack())
     }
 
     render() {
         const { deckTitle } = this.state
         return (
-            <View>
-                <Text>
-                    Enter Deck Title
-                </Text>
-                <TextInput placeholder='Enter Deck Title' value={deckTitle} onChangeText={txt => this.onTextChanged(txt)} />
-                <Button title='Done' onPress={this.handleUpdate}/>
+            <View style={styles.cardTable}>
+                <DeckTitle value={deckTitle} onTextChanged={this.onTextChanged} onSubmit={this.handleUpdate} />
             </View>
-        );
+        )
     }
 }
 

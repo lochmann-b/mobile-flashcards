@@ -15,7 +15,7 @@ export class Home extends Component {
     return {
       title: `Decks`,
       headerRight: (
-        <AddButton onPress={navigation.getParam('addDeck')}/>
+        <AddButton onPress={navigation.getParam('addDeck')} />
       ),
     }
   }
@@ -28,7 +28,7 @@ export class Home extends Component {
   componentDidMount() {
     this.props.navigation.setParams({ addDeck: this.addDeck })
     const { dispatchLoadDummyDecks, dispatchLoadDecks } = this.props
-    
+
     dispatchLoadDecks()
       .then(
         () => {
@@ -63,6 +63,7 @@ export class Home extends Component {
   renderDeckTile = (key) => {
     const { navigate } = this.props.navigation
     const { decks } = this.props
+    const cards = decks[key].cards ? decks[key].cards : []
     return (
       <EditableListItem
         //setting the deck title here is UGLY. But doing it in EditDeck.componentDidMount is far to slow
@@ -70,7 +71,7 @@ export class Home extends Component {
         onDelete={() => this.handleOnDelete(key)}>
         <DeckTile
           title={decks[key].title}
-          numOfCards={decks[key].cards.length}
+          numOfCards={cards.length}
           onPress={() => navigate('Deck', { deckId: key })}
         />
       </EditableListItem>

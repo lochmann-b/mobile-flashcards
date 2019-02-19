@@ -1,8 +1,17 @@
-import { loadInitialData, getAllDecks, updateCardWithId, saveDeck, removeDeck } from '../utils/api'
+import {
+    loadInitialData,
+    getAllDecks,
+    updateCardWithId,
+    saveDeck,
+    removeDeck,
+    changeDeckTitle
+
+} from '../utils/api'
 
 export const RECEIVE_DECKS = 'RECEIVE_DECK'
 export const ADD_DECK = 'ADD_DECK'
 export const DELETE_DECK = 'DELETE_DECK'
+export const RENAME_DECK = 'RENAME_DECK'
 
 function receiveDecks(decks) {
     return {
@@ -22,6 +31,14 @@ function deleteDeck(deck) {
     return {
         type: DELETE_DECK,
         deck
+    }
+}
+
+function renameDeck(deckId, title) {
+    return {
+        type: RENAME_DECK,
+        deckId,
+        title
     }
 }
 
@@ -58,5 +75,12 @@ export function handleDeleteDeck(deck) {
     return dispatch => {
         return removeDeck(deck.id)
             .then(dispatch(deleteDeck(deck)))
+    }
+}
+
+export function handleRenameDeck(deckId, title) {
+    return dispatch => {
+        return changeDeckTitle(deckId, title)
+            .then(dispatch(renameDeck(deckId, title)))
     }
 }

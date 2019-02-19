@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Text, View, TouchableOpacity, Platform } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
-import styles from '../styles'
 import TextButton from './TextButton';
 
 

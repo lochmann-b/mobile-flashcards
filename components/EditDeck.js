@@ -1,15 +1,40 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { View, FlatList } from 'react-native'
+import { View, FlatList, TextInput, Button } from 'react-native'
 import CardTile from './CardTile'
 import styles from '../styles'
 import EditableListItem from './EditableListItem';
 import AddButton from './AddButton'
+import DeckTitle from './DeckTitle'
+import { handleRenameDeck } from '../actions/decks';
 
 class EditDeck extends Component {
 
+    state = {
+        deckTitle: this.props.deck.title
+    }
+
+    onTextChanged = deckTitle => {
+        this.setState({
+            deckTitle
+        })
+    }
+
+    handleUpdate = () => {
+        const { dispatchRenameDeck, deck } = this.props
+        const { deckTitle } = this.state
+
+        dispatchRenameDeck(deck.id, deckTitle).then( () => {
+            this.props.navigation.setParams({
+                ...this.props.navigation.params,
+                deckTitle:deckTitle,
+            });
+        })
+
+    }
+
     static navigationOptions = ({ navigation }) => {
-        const deckTitle = navigation.getParam('deckTitle')        
+        const deckTitle = navigation.getParam('deckTitle')
         return {
             title: `Edit deck ${deckTitle}`,
             headerRight: (
@@ -20,14 +45,13 @@ class EditDeck extends Component {
 
     onAddCard = () => {
         const { navigation, deck } = this.props
-        navigation.navigate('EditCard',{ deckId: deck.id})
+        navigation.navigate('EditCard', { deckId: deck.id })
     }
 
     componentDidMount() {
         this.props.navigation.setParams({
             ...this.props.navigation.params,
             onAddCard: this.onAddCard,
-            deckTitle: this.props.deck.title
         });
     }
 
@@ -47,8 +71,15 @@ class EditDeck extends Component {
     render() {
         const { deck } = this.props
         const listData = deck.cards.map(key => ({ key }))
+        const { deckTitle } = this.state
         return (
             <View style={styles.cardTable}>
+                <DeckTitle
+                    value={deckTitle}
+                    onTextChanged={this.onTextChanged}
+                    onSubmit={this.handleUpdate}
+                    buttonText='Update'
+                />
                 <FlatList
                     contentContainerStyle={styles.listContent}
                     data={listData}
@@ -68,4 +99,11 @@ function mapStateToProps({ decks, cards }, { navigation }) {
         cards: deck.cards.reduce((acc, cur) => ({ ...acc, [cur]: cards[cur] }), {})
     }
 }
-export default connect(mapStateToProps)(EditDeck);
+
+function mapDispatchToProps(dispatch) {
+    return {
+        dispatchRenameDeck: (deckId, title) => dispatch(handleRenameDeck(deckId, title))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditDeck);
