@@ -89,6 +89,7 @@ export class Home extends Component {
     return (
       <View style={styles.cardTable}>
         <FlatList
+          style = {styles.list}
           contentContainerStyle={styles.listContent}
           data={listData}
           renderItem={({ item }) => this.renderDeckTile(item.key)}

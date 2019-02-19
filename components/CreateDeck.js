@@ -27,7 +27,7 @@ class CreateDeck extends Component {
     render() {
         const { deckTitle } = this.state
         return (
-            <View style={styles.cardTable}>
+            <View style={styles.form}>
                 <DeckTitle
                     value={deckTitle}
                     onTextChanged={this.onTextChanged}

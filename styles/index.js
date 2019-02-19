@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+import { red } from 'ansi-colors';
 
 export const moss = '#0a381f'
 export const white = '#ffffff'
@@ -11,6 +12,13 @@ const styles = StyleSheet.create({
     color: white,
     fontSize: 20,
     margin: 5
+  },
+
+  form: {
+    flex: 1,
+    alignItems: 'stretch',
+    padding: 20,
+    backgroundColor: moss,
   },
 
   cardTable: {
@@ -64,10 +72,17 @@ const styles = StyleSheet.create({
 
   answer: {
     alignSelf: 'center'
+  },
+
+  input: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: white,
+    borderRadius: 5,
+    padding: 5,
+    margin: 5,
+    color: white,   
   }
-
-
-
 });
 
 export default styles

@@ -93,38 +93,43 @@ class EditDeck extends Component {
         const listData = deck.cards.map(key => ({ key }))
         const { deckTitle } = this.state
         return (
-            <View style={styles.cardTable}>
+
+            <View style={styles.form}>
                 <DeckTitle
                     value={deckTitle}
                     onTextChanged={this.onTextChanged}
                     onSubmit={this.handleUpdate}
                     buttonText='Update'
                 />
-                <FlatList
-                    contentContainerStyle={styles.listContent}
-                    data={listData}
-                    renderItem={({ item }) => this.renderCardTile(item.key, deck.id)}
-                />
+                <View style={styles.cardTable}>
+                    <FlatList
+                        contentContainerStyle={styles.listContent}
+                        data={listData}
+                        renderItem={({ item }) => this.renderCardTile(item.key, deck.id)}
+                    />
+                </View>
             </View>
+            
+
         )
     }
 }
 
 
-function mapStateToProps({ decks, cards }, { navigation }) {
+function mapStateToProps({decks, cards }, {navigation}) {
     const deckId = navigation.getParam('deckId');
-    const deck = decks[deckId]
+                const deck = decks[deckId]
     return {
-        deck,
-        cards: deck.cards.reduce((acc, cur) => ({ ...acc, [cur]: cards[cur] }), {})
-    }
-}
-
+                    deck,
+                cards: deck.cards.reduce((acc, cur) => ({...acc, [cur]: cards[cur] }), {})
+            }
+        }
+        
 function mapDispatchToProps(dispatch) {
     return {
-        dispatchRenameDeck: (deckId, title) => dispatch(handleRenameDeck(deckId, title)),
-        dispatchDeleteCard: (cardId) => dispatch(handleDeleteCard(cardId))
-    }
-}
-
+                    dispatchRenameDeck: (deckId, title) => dispatch(handleRenameDeck(deckId, title)),
+                dispatchDeleteCard: (cardId) => dispatch(handleDeleteCard(cardId))
+            }
+        }
+        
 export default connect(mapStateToProps, mapDispatchToProps)(EditDeck);

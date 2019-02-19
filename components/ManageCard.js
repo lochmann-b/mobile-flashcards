@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { TextInput, Text, View } from 'react-native'
+import { TextInput, Button, View } from 'react-native'
 import { connect } from 'react-redux'
-import TextButton from './TextButton';
 import { handleUpdateCard, handleAddCard } from '../actions/cards'
+import styles from '../styles';
 
 class ManageCard extends Component {
 
@@ -42,16 +42,12 @@ class ManageCard extends Component {
         const { question, answer } = this.state
 
         return (
-            <View>
-                <Text>
-                    Question
-                </Text>
-                <TextInput placeholder='Enter Question' value={question} onChangeText={txt => this.onTextChanged('question', txt)} />
-                <Text>
-                    Answer
-                </Text>
-                <TextInput placeholder='Enter Answer' name='answer' value={answer} onChangeText={txt => this.onTextChanged('answer', txt)} />
-                <TextButton onPress={this.handleSubmit}> Done</TextButton>
+            <View style={styles.form}>
+                <TextInput placeholder='Enter Question' value={question} onChangeText={txt => this.onTextChanged('question', txt)} style={[styles.input, {flex:0}]} />
+                <TextInput placeholder='Enter Answer' name='answer' value={answer} onChangeText={txt => this.onTextChanged('answer', txt)} style={[styles.input, {flex:0}]} />
+                <View style={{alignSelf: 'center',  margin: 20 }}>
+                    <Button title='Create card' onPress={this.handleSubmit}/>
+                </View>
             </View>
         );
     }
