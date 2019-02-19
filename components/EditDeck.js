@@ -2,15 +2,33 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { View, FlatList } from 'react-native'
 import CardTile from './CardTile'
-import TextButton from './TextButton'
 import styles from '../styles'
 import EditableListItem from './EditableListItem';
+import AddButton from './AddButton'
 
 class EditDeck extends Component {
-    static navigationOptions = () => {
+
+    static navigationOptions = ({ navigation }) => {
+        const deckTitle = navigation.getParam('deckTitle')        
         return {
-            title: `Edit`,
+            title: `Edit deck ${deckTitle}`,
+            headerRight: (
+                <AddButton onPress={navigation.getParam('onAddCard')} />
+            ),
         }
+    }
+
+    onAddCard = () => {
+        const { navigation, deck } = this.props
+        navigation.navigate('EditCard',{ deckId: deck.id})
+    }
+
+    componentDidMount() {
+        this.props.navigation.setParams({
+            ...this.props.navigation.params,
+            onAddCard: this.onAddCard,
+            deckTitle: this.props.deck.title
+        });
     }
 
     renderCardTile = (cardId) => {

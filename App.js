@@ -12,7 +12,7 @@ import { Constants } from 'expo'
 import Deck from './components/Deck'
 import Play from './components/Play'
 import DeleteDeck from './components/DeleteDeck'
-import EditCard from './components/EditCard'
+import ManageCard from './components/ManageCard'
 import EditDeck from './components/EditDeck'
 import CreateDeck from './components/CreateDeck'
 import DeleteCard from './components/DeleteCard'
@@ -40,8 +40,8 @@ const HomeStack = createStackNavigator(
     Play: Play,
     DeleteCard: DeleteCard,
     CreateDeck: CreateDeck,
-    EditCard: EditCard,
-    EditDeck: EditDeck
+    EditCard: ManageCard,
+    EditDeck: EditDeck,
   })
 
   const Tabs = createBottomTabNavigator({

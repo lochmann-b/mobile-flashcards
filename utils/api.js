@@ -36,11 +36,11 @@ export function getAllDecks() {
 }
 
 export function updateCardWithId(cardId, question, answer) {
-    return getDeckOfCard(cardId).then( deck => {
+    return getDeckOfCard(cardId).then(deck => {
         console.log('found deck ', deck)
-        const newCard = Object.assign(deck.cards[cardId], {question, answer})        
+        const newCard = Object.assign(deck.cards[cardId], { question, answer })
         deck.cards[cardId] = newCard
-        AsyncStorage.mergeItem(STORAGE_KEY, JSON.stringify({ [deck.id]: deck }))        
+        AsyncStorage.mergeItem(STORAGE_KEY, JSON.stringify({ [deck.id]: deck }))
         return newCard
     })
 }
@@ -55,14 +55,34 @@ export function saveDeck(title) {
     return AsyncStorage.mergeItem(STORAGE_KEY, JSON.stringify({ [deck.id]: deck })).then(() => deck)
 }
 
-export function removeDeck(deckId){
+export function removeDeck(deckId) {
     return AsyncStorage.getItem(STORAGE_KEY)
-    .then(result => {
-        const decks = JSON.parse(result)
-        decks[deckId] = undefined
-        delete decks[deckId]
-        AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(decks))
-    })
+        .then(result => {
+            const decks = JSON.parse(result)
+            decks[deckId] = undefined
+            delete decks[deckId]
+            AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(decks))
+        })
+}
+
+export function createCard(deckId, question, answer) {
+    const newCard = {
+        id: generateUID(),
+        timestamp: Date.now(),
+        question,
+        answer
+    }
+
+    return AsyncStorage.getItem(STORAGE_KEY)
+        .then(result => {
+            const decks = JSON.parse(result)
+            console.log(deckId)
+            decks[deckId].cards = {
+                ...decks[deckId].cards,
+                [newCard.id]: newCard
+            }
+            AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(decks))
+        }).then( () => newCard)
 }
 
 /*

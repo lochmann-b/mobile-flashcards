@@ -2,9 +2,15 @@ import React, { Component } from 'react';
 import { TextInput, Text, View } from 'react-native'
 import { connect } from 'react-redux'
 import TextButton from './TextButton';
-import { handleUpdateCard } from '../actions/cards'
+import { handleUpdateCard, handleAddCard } from '../actions/cards'
 
-class EditCard extends Component {
+class ManageCard extends Component {
+
+    static navigationOptions = ({ navigation }) => {
+        return {
+            title: `${navigation.getParam('cardId') ? 'Edit' : 'Add'} Card`,
+        }
+    }
 
     state = {
         question: this.props.card ? this.props.card.question : '',
@@ -18,17 +24,18 @@ class EditCard extends Component {
         })
     }
 
-    handleUpdate = () => {
-        const { dispatch, card, navigation } = this.props
+    handleSubmit = () => {
+        const { dispatchUpdateCard, dispatchAddCard, card, navigation } = this.props
         const { question, answer } = this.state
-        dispatch(handleUpdateCard(card.id, question, answer))
-            .then(() => {
-                navigation.goBack()
-            })
-            .catch(e => {
-                console.log('Could not update card', e)
-                alert('Could not update card')
-            })
+
+        const prom = card ? dispatchUpdateCard(card.id, question, answer) : dispatchAddCard(navigation.getParam('deckId'), question, answer)
+        prom.then(() => {
+            navigation.goBack()
+        }).catch(e => {
+            const message = `${card ? 'Could not update card' : 'could not add card'}`
+            console.log(message, e)
+            alert(message)
+        })
     }
 
     render() {
@@ -44,7 +51,7 @@ class EditCard extends Component {
                     Answer
                 </Text>
                 <TextInput placeholder='Enter Answer' name='answer' value={answer} onChangeText={txt => this.onTextChanged('answer', txt)} />
-                <TextButton onPress={this.handleUpdate}> Done</TextButton>
+                <TextButton onPress={this.handleSubmit}> Done</TextButton>
             </View>
         );
     }
@@ -58,5 +65,12 @@ function mapStateToProps({ cards }, { navigation }) {
     }
 }
 
+function mapDispatchToProps(dispatch) {
+    return {
+        dispatchUpdateCard: (cardId, question, answer) => dispatch(handleUpdateCard(cardId, question, answer)),
+        dispatchAddCard: (deckId, question, answer) => dispatch(handleAddCard(deckId, question, answer)),
+    }
+}
 
-export default connect(mapStateToProps)(EditCard);
+
+export default connect(mapStateToProps, mapDispatchToProps)(ManageCard);

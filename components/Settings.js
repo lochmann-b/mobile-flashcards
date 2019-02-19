@@ -1,15 +1,17 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
-import PropTypes from 'prop-types'
+import { View, } from 'react-native'
 import { connect } from 'react-redux'
+import TextButton from './TextButton';
+import { reset } from '../utils/api' // TODO remove
 
 export class Settings extends Component {
   render() {
     return (
       <View>
-          <Text>
-              Settings
-          </Text>
+          <TextButton onPress={ () => reset()}>
+            Reset Local Store
+          </TextButton>
+          
       </View>
     )
   }

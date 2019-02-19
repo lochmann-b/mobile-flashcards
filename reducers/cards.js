@@ -1,5 +1,5 @@
 import { RECEIVE_DECKS, ADD_DECK, DELETE_DECK } from '../actions/decks'
-import { UPDATE_CARD } from '../actions/cards'
+import { UPDATE_CARD, ADD_CARD } from '../actions/cards'
 
 export default function decks(state = {}, action) {
     switch (action.type) {
@@ -12,6 +12,7 @@ export default function decks(state = {}, action) {
             }
         case ADD_DECK:
             return {
+                //a deck, for now, is created without cards. Could be change in the future
                 ...state, ...action.deck.cards
             }
         case DELETE_DECK:
@@ -19,6 +20,9 @@ export default function decks(state = {}, action) {
             return Object.keys(state)
                 .filter(cardId => deletedCardIDs.has(cardId))
                 .reduce((acc, cur) => ({ ...acc, [cur]: state[cur] }), {})
+        case ADD_CARD:
+            const { card } = action
+            return { ...state, [card.id]: card }
         default:
             return state
 

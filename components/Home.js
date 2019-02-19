@@ -1,14 +1,12 @@
 import React, { Component } from 'react'
-import { View, FlatList, ActivityIndicator, TouchableOpacity, Platform, Alert } from 'react-native'
+import { View, FlatList, ActivityIndicator, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import { handleLoadDecks, handleLoadDummyDecks, handleAddDeck, handleDeleteDeck } from '../actions/decks'
-import { Ionicons } from '@expo/vector-icons'
 import styles from '../styles'
 import white from '../styles'
 import DeckTile from './DeckTile'
 import EditableListItem from './EditableListItem'
-
-import { reset } from '../utils/api' // TODO remove
+import AddButton from './AddButton'
 
 
 export class Home extends Component {
@@ -17,9 +15,7 @@ export class Home extends Component {
     return {
       title: `Decks`,
       headerRight: (
-        <TouchableOpacity onPress={navigation.getParam('addDeck')}>
-          <Ionicons size={20} name={Platform.OS === 'ios' ? 'ios-add' : 'md-add'} ></Ionicons>
-        </TouchableOpacity>
+        <AddButton onPress={navigation.getParam('addDeck')}/>
       ),
     }
   }
@@ -32,7 +28,7 @@ export class Home extends Component {
   componentDidMount() {
     this.props.navigation.setParams({ addDeck: this.addDeck })
     const { dispatchLoadDummyDecks, dispatchLoadDecks } = this.props
-    //reset().then(() => {
+    
     dispatchLoadDecks()
       .then(
         () => {
@@ -41,9 +37,6 @@ export class Home extends Component {
           }
         }
       )
-
-
-    //})
   }
 
 
@@ -72,7 +65,8 @@ export class Home extends Component {
     const { decks } = this.props
     return (
       <EditableListItem
-        onEdit={() => navigate('EditDeck', { deckId: key })}
+        //setting the deck title here is UGLY. But doing it in EditDeck.componentDidMount is far to slow
+        onEdit={() => navigate('EditDeck', { deckId: key, deckTitle: decks[key].title })}
         onDelete={() => this.handleOnDelete(key)}>
         <DeckTile
           title={decks[key].title}
@@ -82,7 +76,6 @@ export class Home extends Component {
       </EditableListItem>
     )
   }
-
 
   render() {
     const { decks } = this.props
