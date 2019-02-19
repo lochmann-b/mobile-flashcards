@@ -15,7 +15,6 @@ import DeleteDeck from './components/DeleteDeck'
 import ManageCard from './components/ManageCard'
 import EditDeck from './components/EditDeck'
 import CreateDeck from './components/CreateDeck'
-import DeleteCard from './components/DeleteCard'
 
 
 const addMarginTop = (ToWrap) => {
@@ -38,7 +37,6 @@ const HomeStack = createStackNavigator(
     Home: Home,
     Deck: Deck,
     Play: Play,
-    DeleteCard: DeleteCard,
     CreateDeck: CreateDeck,
     EditCard: ManageCard,
     EditDeck: EditDeck,

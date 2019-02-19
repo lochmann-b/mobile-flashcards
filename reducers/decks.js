@@ -1,5 +1,5 @@
 import { RECEIVE_DECKS, ADD_DECK, DELETE_DECK, RENAME_DECK } from '../actions/decks'
-import { ADD_CARD } from '../actions/cards';
+import { ADD_CARD, DELETE_CARD } from '../actions/cards';
 
 export default function decks(state = {}, action) {
     switch (action.type) {
@@ -28,6 +28,16 @@ export default function decks(state = {}, action) {
                 [deckId]: {
                     ...state[deckId],
                     title
+                }
+            }
+        }
+        case DELETE_CARD: {
+            const { cardId, deckId } = action
+            return {
+                ...state,
+                [deckId]: {
+                    ...state[deckId],
+                    cards: state[deckId].cards.filter(id => id !== cardId)
                 }
             }
         }

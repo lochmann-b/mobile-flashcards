@@ -82,10 +82,10 @@ export function createCard(deckId, question, answer) {
                 [newCard.id]: newCard
             }
             AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(decks))
-        }).then( () => newCard)
+        }).then(() => newCard)
 }
 
-export function changeDeckTitle(deckId, title){
+export function changeDeckTitle(deckId, title) {
     deck = {
         title,
         id: deckId
@@ -93,14 +93,18 @@ export function changeDeckTitle(deckId, title){
     return AsyncStorage.mergeItem(STORAGE_KEY, JSON.stringify({ [deck.id]: deck }))
 }
 
-/*
-
-export function removeEntry(key) {
-    return AsyncStorage.getItem(CALENDAR_STORAGE_KEY)
-        .then(result => {
-            const data = JSON.parse(result)
-            data[key] = undefined
-            delete data[key]
-            AsyncStorage.setItem(CALENDAR_STORAGE_KEY, JSON.stringify(data))
+export function removeCard(cardId) {
+    return Promise.all([
+        AsyncStorage.getItem(STORAGE_KEY),
+        getDeckOfCard(cardId)])
+        .then( ([result, deck]) => {
+            const decks = JSON.parse(result)
+            delete deck.cards[cardId]
+            AsyncStorage.setItem(STORAGE_KEY, JSON.stringify({ 
+                ...decks,
+                [deck.id] : deck                
+             }))
+             return deck.id
         })
-}*/
+        
+}

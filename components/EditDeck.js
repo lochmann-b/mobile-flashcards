@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { View, FlatList, TextInput, Button } from 'react-native'
+import { View, FlatList, Alert } from 'react-native'
 import CardTile from './CardTile'
 import styles from '../styles'
 import EditableListItem from './EditableListItem';
 import AddButton from './AddButton'
 import DeckTitle from './DeckTitle'
 import { handleRenameDeck } from '../actions/decks';
+import { handleDeleteCard } from '../actions/cards';
 
 class EditDeck extends Component {
 
@@ -24,10 +25,10 @@ class EditDeck extends Component {
         const { dispatchRenameDeck, deck } = this.props
         const { deckTitle } = this.state
 
-        dispatchRenameDeck(deck.id, deckTitle).then( () => {
+        dispatchRenameDeck(deck.id, deckTitle).then(() => {
             this.props.navigation.setParams({
                 ...this.props.navigation.params,
-                deckTitle:deckTitle,
+                deckTitle: deckTitle,
             });
         })
 
@@ -48,6 +49,25 @@ class EditDeck extends Component {
         navigation.navigate('EditCard', { deckId: deck.id })
     }
 
+    onDeleteCard = (cardId) => {
+        const { dispatchDeleteCard, cards } = this.props
+        Alert.alert('Delete Card',
+            `Really delete card "${cards[cardId].question.substring(0, 15)}..."?`,
+            [
+                {
+                    text: 'Cancel',
+                    style: 'cancel',
+                },
+                {
+                    text: 'Delete',
+                    onPress: () => dispatchDeleteCard(cardId),
+                    style: 'destructive'
+                },
+            ],
+            { cancelable: true },
+        )
+    }
+
     componentDidMount() {
         this.props.navigation.setParams({
             ...this.props.navigation.params,
@@ -62,7 +82,7 @@ class EditDeck extends Component {
         return (
             <EditableListItem
                 onEdit={() => navigate('EditCard', { cardId: cardId })} style={styles.editButton}
-                onDelete={() => navigate('DeleteCard', { cardId: cardId })} style={styles.deleteButton}>
+                onDelete={() => this.onDeleteCard(cardId)} style={styles.deleteButton}>
                 <CardTile question={card.question} answer={card.answer} />
             </EditableListItem>
         )
@@ -102,7 +122,8 @@ function mapStateToProps({ decks, cards }, { navigation }) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        dispatchRenameDeck: (deckId, title) => dispatch(handleRenameDeck(deckId, title))
+        dispatchRenameDeck: (deckId, title) => dispatch(handleRenameDeck(deckId, title)),
+        dispatchDeleteCard: (cardId) => dispatch(handleDeleteCard(cardId))
     }
 }
 

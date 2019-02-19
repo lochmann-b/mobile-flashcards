@@ -28,7 +28,11 @@ class CreateDeck extends Component {
         const { deckTitle } = this.state
         return (
             <View style={styles.cardTable}>
-                <DeckTitle value={deckTitle} onTextChanged={this.onTextChanged} onSubmit={this.handleUpdate} />
+                <DeckTitle
+                    value={deckTitle}
+                    onTextChanged={this.onTextChanged}
+                    onSubmit={this.handleUpdate}                   
+                />
             </View>
         )
     }

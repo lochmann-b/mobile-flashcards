@@ -47,7 +47,6 @@ export class Home extends Component {
       [
         {
           text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
         {
@@ -56,7 +55,7 @@ export class Home extends Component {
           style: 'destructive'
         },
       ],
-      { cancelable: false },
+      { cancelable: true },
     );
   }
 
