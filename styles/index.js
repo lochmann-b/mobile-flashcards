@@ -56,6 +56,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
 
+  flipCard: {
+    backfaceVisibility: 'hidden',
+  },
+
+  flipCardBack: {
+    top: 0,
+    position: "absolute",
+  },
+
   deckTitle: {
     alignSelf: 'center',
     fontSize: 15,
@@ -97,7 +106,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 5,
     margin: 5,
-    color: white,   
+    color: white,
   },
 });
 
