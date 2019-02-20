@@ -25,7 +25,7 @@ class CreateDeck extends Component {
         const { deckTitle } = this.state
 
         onAddDeck(deckTitle)
-            .then(() => navigation.goBack())
+            .then((action) => navigation.navigate('EditDeck', { deckId: action.deck.id, deckTitle: action.deck.title }))
     }
 
     render() {

@@ -12,7 +12,7 @@ export class Home extends Component {
 
   static navigationOptions = ({ navigation }) => {
     return {
-      title: `Decks`,
+      title: `Tab a deck to play`,
       headerRight: (
         <AddButton onPress={navigation.getParam('addDeck')} />
       ),

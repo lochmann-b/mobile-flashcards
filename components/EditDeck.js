@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { View, FlatList, Alert } from 'react-native'
+import { View, FlatList, Alert, Text } from 'react-native'
 import CardTile from './CardTile'
 import styles from '../styles'
 import EditableListItem from './EditableListItem';
@@ -88,9 +88,16 @@ class EditDeck extends Component {
         )
     }
 
+    ListEmptyComponent = () => {
+        return (
+        <View style={{flex:1, alignItems:'center'}}>  
+          <Text style={styles.infoText} >Press the + sign to add a card</Text>
+        </View>)
+      }
+
     render() {
         const { deck } = this.props
-        const listData = deck.cards.map(key => ({ key }))
+        const listData = deck.cards.sort( (a,b) => b.timestamp - a.timestamp).map(key => ({ key }))
         const { deckTitle } = this.state
         return (
 
@@ -106,28 +113,29 @@ class EditDeck extends Component {
                         contentContainerStyle={styles.listContent}
                         data={listData}
                         renderItem={({ item }) => this.renderCardTile(item.key, deck.id)}
+                        ListEmptyComponent = {this.ListEmptyComponent}
                     />
                 </View>
-            </View>            
+            </View>
         )
     }
 }
 
 
-function mapStateToProps({decks, cards }, {navigation}) {
+function mapStateToProps({ decks, cards }, { navigation }) {
     const deckId = navigation.getParam('deckId');
-                const deck = decks[deckId]
+    const deck = decks[deckId]
     return {
-                    deck,
-                cards: deck.cards.reduce((acc, cur) => ({...acc, [cur]: cards[cur] }), {})
-            }
-        }
-        
+        deck,
+        cards: deck.cards.reduce((acc, cur) => ({ ...acc, [cur]: cards[cur] }), {})
+    }
+}
+
 function mapDispatchToProps(dispatch) {
     return {
-                    dispatchRenameDeck: (deckId, title) => dispatch(handleRenameDeck(deckId, title)),
-                dispatchDeleteCard: (cardId) => dispatch(handleDeleteCard(cardId))
-            }
-        }
-        
+        dispatchRenameDeck: (deckId, title) => dispatch(handleRenameDeck(deckId, title)),
+        dispatchDeleteCard: (cardId) => dispatch(handleDeleteCard(cardId))
+    }
+}
+
 export default connect(mapStateToProps, mapDispatchToProps)(EditDeck);

@@ -111,7 +111,8 @@ const styles = StyleSheet.create({
 
   infoText: {
     margin: 20, 
-    color:'white'
+    color:'white',
+    fontSize: 15
   },
 
   loadButton: {

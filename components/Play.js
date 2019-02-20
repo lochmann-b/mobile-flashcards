@@ -54,10 +54,25 @@ class Play extends Component {
         })
     }
 
+    noCards = () => {
+        const { navigation, deck } = this.props
+        return (
+        <View style={styles.cardTable}>  
+          <Text style={styles.infoText} >This deck is empty</Text>
+          <TextButton style = {styles.loadButton} onPress={() => navigation.navigate('EditDeck', {deckId: deck.id})}>
+            Edit Deck
+          </TextButton>
+        </View>)
+      }
+
     render() {
         const { cards } = this.props
         const { cardIndex, correctAnswered, answered } = this.state
         const currentCard = cards[cardIndex]
+
+        if (cards.length === 0){
+            return this.noCards()
+        }
 
         return (
             <View style={styles.cardTable}>

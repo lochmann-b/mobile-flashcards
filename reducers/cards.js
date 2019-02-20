@@ -19,7 +19,7 @@ export default function decks(state = {}, action) {
         case DELETE_DECK:
             deletedCardIDs = new Set(action.deck.cards)
             return Object.keys(state)
-                .filter(cardId => deletedCardIDs.has(cardId))
+                .filter(cardId => !deletedCardIDs.has(cardId))
                 .reduce((acc, cur) => ({ ...acc, [cur]: state[cur] }), {})
         case ADD_CARD:
             const { card } = action
