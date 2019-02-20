@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
-import { View, FlatList, ActivityIndicator, Alert } from 'react-native'
+import { View, FlatList, Text, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import { handleLoadDecks, handleLoadDummyDecks, handleAddDeck, handleDeleteDeck } from '../actions/decks'
 import styles from '../styles'
-import white from '../styles'
 import DeckTile from './DeckTile'
 import EditableListItem from './EditableListItem'
 import AddButton from './AddButton'
-
+import TextButton from './TextButton'
 
 export class Home extends Component {
 
@@ -27,8 +26,7 @@ export class Home extends Component {
 
   componentDidMount() {
     this.props.navigation.setParams({ addDeck: this.addDeck })
-    const { dispatchLoadDummyDecks, dispatchLoadDecks } = this.props
-
+    const { dispatchLoadDecks } = this.props
     dispatchLoadDecks()
   }
 
@@ -70,15 +68,20 @@ export class Home extends Component {
     )
   }
 
+  ListEmptyComponent = () => {
+    const { dispatchLoadDummyDecks } = this.props
+    return (
+    <View style={{flex:1, alignItems:'center'}}>  
+      <Text style={styles.infoText} >No decks found. Should I load some exciting flashcards?</Text>
+      <TextButton style = {styles.loadButton} onPress={() => dispatchLoadDummyDecks()}>
+        Load
+      </TextButton>
+    </View>)
+  }
+
   render() {
     const { decks } = this.props
     const listData = decks ? Object.keys(decks).sort((a, b) => decks[b].timestamp - decks[a].timestamp).map(key => ({ key })) : []
-
-    if (listData.length === 0) {
-      return <View style={styles.cardTable}>
-        <ActivityIndicator size='large' color={white} />
-      </View>
-    }
     return (
       <View style={styles.cardTable}>
         <FlatList
@@ -86,6 +89,7 @@ export class Home extends Component {
           contentContainerStyle={styles.listContent}
           data={listData}
           renderItem={({ item }) => this.renderDeckTile(item.key)}
+          ListEmptyComponent = {this.ListEmptyComponent}
         />
       </View>
     )

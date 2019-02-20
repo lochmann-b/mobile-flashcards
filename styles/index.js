@@ -108,6 +108,21 @@ const styles = StyleSheet.create({
     margin: 5,
     color: white,
   },
+
+  infoText: {
+    margin: 20, 
+    color:'white'
+  },
+
+  loadButton: {
+    color: white,
+    padding: 10,
+    borderColor: white,
+    margin: 2,
+    width: 120,
+    borderWidth: 1,
+    borderRadius: 2
+  }
 });
 
 export default styles
