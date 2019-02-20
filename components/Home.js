@@ -30,13 +30,6 @@ export class Home extends Component {
     const { dispatchLoadDummyDecks, dispatchLoadDecks } = this.props
 
     dispatchLoadDecks()
-      .then(
-        () => {
-          if (Object.keys(this.props.decks).length === 0) {
-            dispatchLoadDummyDecks()
-          }
-        }
-      )
   }
 
 

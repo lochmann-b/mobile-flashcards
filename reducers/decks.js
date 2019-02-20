@@ -1,5 +1,6 @@
 import { RECEIVE_DECKS, ADD_DECK, DELETE_DECK, RENAME_DECK } from '../actions/decks'
 import { ADD_CARD, DELETE_CARD } from '../actions/cards';
+import { RESET_ALL } from '../actions/shared'
 
 export default function decks(state = {}, action) {
     switch (action.type) {
@@ -41,6 +42,8 @@ export default function decks(state = {}, action) {
                 }
             }
         }
+        case RESET_ALL:
+            return {}
         default:
             return state
     }

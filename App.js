@@ -10,10 +10,10 @@ import { SafeAreaView } from 'react-native'
 import { Constants } from 'expo'
 
 import Play from './components/Play'
-import DeleteDeck from './components/DeleteDeck'
 import ManageCard from './components/ManageCard'
 import EditDeck from './components/EditDeck'
 import CreateDeck from './components/CreateDeck'
+import ResetAll from './components/ResetAll';
 
 
 const addMarginTop = (ToWrap) => {
@@ -27,8 +27,6 @@ const addMarginTop = (ToWrap) => {
     }
   }
 }
-
-
 
 const HomeStack = createStackNavigator(
   {
@@ -47,16 +45,11 @@ const Tabs = createBottomTabNavigator({
 
 const ModalStack = createStackNavigator({
   HomeStack: Tabs,
-  DeleteDeck: addMarginTop(DeleteDeck)
+  ResetAll: addMarginTop(ResetAll)
 }, {
     mode: 'modal',
     headerMode: 'none'
   })
-
-
-
-
-
 
 export default class App extends React.Component {
 

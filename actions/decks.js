@@ -13,12 +13,6 @@ export const ADD_DECK = 'ADD_DECK'
 export const DELETE_DECK = 'DELETE_DECK'
 export const RENAME_DECK = 'RENAME_DECK'
 
-function receiveDecks(decks) {
-    return {
-        type: RECEIVE_DECKS,
-        decks
-    }
-}
 
 function addDeck(deck) {
     return {
@@ -41,6 +35,14 @@ function renameDeck(deckId, title) {
         title
     }
 }
+
+export function receiveDecks(decks) {
+    return {
+        type: RECEIVE_DECKS,
+        decks
+    }
+}
+
 
 export function handleLoadDecks() {
     return dispatch => {
