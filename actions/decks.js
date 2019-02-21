@@ -36,7 +36,7 @@ function renameDeck(deckId, title) {
     }
 }
 
-export function receiveDecks(decks) {
+function receiveDecks(decks) {
     return {
         type: RECEIVE_DECKS,
         decks

@@ -5,6 +5,7 @@ import styles from '../styles'
 import CardTile from './CardTile'
 import TextButton from './TextButton'
 import AnimatedCard from './AnimatedCard'
+import { clearLocalNotifications, setLocalNotification } from '../utils/helpers'
 
 
 
@@ -30,6 +31,9 @@ class Play extends Component {
     onAnswer = (knewIt) => {
         this.child.current.resetAnimation()
         this.nextCard(knewIt)
+
+        clearLocalNotifications()
+            .then(setLocalNotification)
     }
 
     nextCard = (knewIt) => {
@@ -46,20 +50,20 @@ class Play extends Component {
     noCards = () => {
         const { navigation, deck } = this.props
         return (
-        <View style={styles.cardTable}>  
-          <Text style={styles.infoText} >This deck is empty</Text>
-          <TextButton style = {styles.loadButton} onPress={() => navigation.navigate('EditDeck', {deckId: deck.id})}>
-            Edit Deck
+            <View style={styles.cardTable}>
+                <Text style={styles.infoText} >This deck is empty</Text>
+                <TextButton style={styles.loadButton} onPress={() => navigation.navigate('EditDeck', { deckId: deck.id })}>
+                    Edit Deck
           </TextButton>
-        </View>)
-      }
+            </View>)
+    }
 
     render() {
         const { cards } = this.props
         const { cardIndex, correctAnswered, answered } = this.state
         const currentCard = cards[cardIndex]
 
-        if (cards.length === 0){
+        if (cards.length === 0) {
             return this.noCards()
         }
 
@@ -69,8 +73,8 @@ class Play extends Component {
                     {`Correct answers: ${answered == 0 ? ' - ' : (correctAnswered / answered * 100).toFixed(1)}%`}
                 </Text>
                 <AnimatedCard ref={this.child}>
-                    <CardTile question={currentCard.question} answer={currentCard.answer} faceUp={false} style={{width: 220}}/>
-                    <CardTile question={currentCard.question} answer={currentCard.answer} faceUp={true} style={{width: 220}}/>
+                    <CardTile question={currentCard.question} answer={currentCard.answer} faceUp={false} style={{ width: 220 }} />
+                    <CardTile question={currentCard.question} answer={currentCard.answer} faceUp={true} style={{ width: 220 }} />
                 </AnimatedCard>
                 <View style={{ marginBottom: 10, flexDirection: 'row', justifyContent: 'center' }}>
                     <TextButton onPress={() => this.onAnswer(true)} style={[styles.textButton, { backgroundColor: '#98FB98' }]}>I Knew It</TextButton>

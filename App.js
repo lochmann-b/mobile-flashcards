@@ -8,7 +8,7 @@ import reducer from './reducers'
 import middleware from './middleware'
 import { SafeAreaView } from 'react-native'
 import { Constants } from 'expo'
-
+import { setLocalNotification } from './utils/helpers'
 import Play from './components/Play'
 import ManageCard from './components/ManageCard'
 import EditDeck from './components/EditDeck'
@@ -52,6 +52,10 @@ const ModalStack = createStackNavigator({
   })
 
 export default class App extends React.Component {
+
+  componentDidMount() {
+    setLocalNotification()
+  }
 
   render() {
     const TabsContainer = createAppContainer(ModalStack)
