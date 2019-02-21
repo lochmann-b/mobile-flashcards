@@ -92,10 +92,12 @@ const styles = StyleSheet.create({
   },
 
   question: {
+    marginTop: 10,
     alignSelf: 'center'
   },
 
   answer: {
+    marginTop: 20,
     alignSelf: 'center'
   },
 

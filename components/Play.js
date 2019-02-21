@@ -20,7 +20,6 @@ class Play extends Component {
         cardIndex: 0,
         answered: 0,
         correctAnswered: 0,
-        faceUp: false
     }
 
     constructor(props) {
@@ -29,7 +28,6 @@ class Play extends Component {
     }
 
     onAnswer = (knewIt) => {
-        console.log('nextcard, faceup is', this.state.faceUp)
         this.child.current.resetAnimation()
         this.nextCard(knewIt)
     }
@@ -41,15 +39,6 @@ class Play extends Component {
                 cardIndex: cardCount > current.cardIndex + 1 ? current.cardIndex + 1 : 0,
                 answered: current.answered + 1,
                 correctAnswered: knewIt === true ? current.correctAnswered + 1 : current.correctAnswered,
-            }
-        })
-    }
-
-    onCardFlipped = (faceUp) => {
-        this.setState( current => {
-            console.log(!current.faceUp)
-            return {
-                faceUp: !current.faceUp
             }
         })
     }
@@ -79,9 +68,9 @@ class Play extends Component {
                 <Text style={styles.title}>
                     {`Correct answers: ${answered == 0 ? ' - ' : (correctAnswered / answered * 100).toFixed(1)}%`}
                 </Text>
-                <AnimatedCard callback={this.onCardFlipped} ref={this.child}>
-                    <CardTile question={currentCard.question} answer={currentCard.answer} faceUp={false} />
-                    <CardTile question={currentCard.question} answer={currentCard.answer} faceUp={true} />
+                <AnimatedCard ref={this.child}>
+                    <CardTile question={currentCard.question} answer={currentCard.answer} faceUp={false} style={{width: 220}}/>
+                    <CardTile question={currentCard.question} answer={currentCard.answer} faceUp={true} style={{width: 220}}/>
                 </AnimatedCard>
                 <View style={{ marginBottom: 10, flexDirection: 'row', justifyContent: 'center' }}>
                     <TextButton onPress={() => this.onAnswer(true)} style={[styles.textButton, { backgroundColor: '#98FB98' }]}>I Knew It</TextButton>
