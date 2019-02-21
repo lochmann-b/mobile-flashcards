@@ -2,6 +2,7 @@ import React from 'react'
 import { View } from 'react-native'
 import TextButton from './TextButton'
 import styles from '../styles'
+import PropTypes from 'prop-types'
 
 const EditableListItem = (props) => {
     const { onEdit, onDelete, children } = props
@@ -14,6 +15,11 @@ const EditableListItem = (props) => {
             </View>
         </View>
     )
+}
+
+EditableListItem.propTypes = {
+    onEdit: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired
 }
 
 export default EditableListItem

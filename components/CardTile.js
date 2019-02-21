@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native'
 import styles from '../styles'
+import PropTypes from 'prop-types'
 
 const CardTile = (props) => {
     const { question, answer, faceUp = true, style } = props
@@ -14,6 +15,12 @@ const CardTile = (props) => {
             </Text>}
         </View>
     )
+}
+
+CardTile.propTypes = {
+    question: PropTypes.string.isRequired,
+    answer: PropTypes.string.isRequired,
+    faceUp: PropTypes.bool
 }
 
 export default CardTile;

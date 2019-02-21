@@ -1,6 +1,7 @@
 import React from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import {TouchableOpacity, Platform} from 'react-native'
+import PropTypes from 'prop-types'
 
 const AddButton = ({onPress}) => {
     return (
@@ -9,5 +10,10 @@ const AddButton = ({onPress}) => {
         </TouchableOpacity>
     )
 }
+
+AddButton.propTypes = {
+  onPress: PropTypes.func
+}
+
 
 export default AddButton;

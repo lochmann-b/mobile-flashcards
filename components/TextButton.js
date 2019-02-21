@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text, TouchableOpacity, StyleSheet } from 'react-native'
-
+import PropTypes from 'prop-types'
 
 export default function TextButton({ children, onPress, style = {} }) {
     return (
@@ -15,3 +15,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     }
 })
+
+TextButton.propTypes = {
+    onPress: PropTypes.func.isRequired,
+}

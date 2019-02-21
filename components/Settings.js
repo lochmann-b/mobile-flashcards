@@ -5,6 +5,8 @@ import TextButton from './TextButton';
 import { handleLoadDummyDecks } from '../actions/decks'
 import { Permissions,  } from 'expo'
 import { setLocalNotification, clearLocalNotifications, getLocalNotification } from '../utils/helpers'
+import PropTypes from 'prop-types'
+
 
 export class Settings extends Component {
   
@@ -104,5 +106,11 @@ const styles = StyleSheet.create({
     borderRadius: 2
   }
 })
+
+Settings.propTypes = {
+  cardCount: PropTypes.number.isRequired,
+  deckCount: PropTypes.number.isRequired,
+  dispatchLoadDecks: PropTypes.func.isRequired
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings)

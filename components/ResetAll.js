@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { Text, View, StyleSheet, Button } from 'react-native'
 import { handleResetAll } from '../actions/shared'
 import TextButton from './TextButton'
+import PropTypes from 'prop-types'
+
 class ResetAll extends Component {
     render() {
         const { dispatchResetAll, navigation } = this.props
@@ -51,5 +53,9 @@ const styles = StyleSheet.create({
     },
 
 })
+
+ResetAll.propTypes = {
+    dispatchResetAll: PropTypes.func.isRequired
+}
 
 export default connect(null, mapDispatchToProps)(ResetAll)

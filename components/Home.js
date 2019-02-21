@@ -7,6 +7,7 @@ import DeckTile from './DeckTile'
 import EditableListItem from './EditableListItem'
 import AddButton from './AddButton'
 import TextButton from './TextButton'
+import PropTypes from 'prop-types'
 
 export class Home extends Component {
 
@@ -109,6 +110,14 @@ const mapDispatchToProps = dispatch => {
     dispatchAddDeck: (title) => dispatch(handleAddDeck(title)),
     dispatchDeleteDeck: (deck) => dispatch(handleDeleteDeck(deck))
   })
+}
+
+Home.propTypes = {
+  decks: PropTypes.object,
+  dispatchLoadDecks: PropTypes.func.isRequired,
+  dispatchLoadDecks: PropTypes.func.isRequired,
+  dispatchAddDeck: PropTypes.func.isRequired,
+  dispatchDeleteDeck: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

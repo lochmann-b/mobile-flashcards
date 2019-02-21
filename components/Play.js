@@ -6,6 +6,7 @@ import CardTile from './CardTile'
 import TextButton from './TextButton'
 import AnimatedCard from './AnimatedCard'
 import { clearLocalNotifications, setLocalNotification } from '../utils/helpers'
+import PropTypes from 'prop-types'
 
 
 
@@ -95,5 +96,9 @@ function mapStateToProps({ decks, cards }, { navigation }) {
     }
 }
 
+Play.propTypes = {
+    deck: PropTypes.object.isRequired,
+    cards: PropTypes.array.isRequired
+}
 
 export default connect(mapStateToProps)(Play);

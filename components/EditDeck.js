@@ -8,6 +8,7 @@ import AddButton from './AddButton'
 import DeckTitle from './DeckTitle'
 import { handleRenameDeck } from '../actions/decks';
 import { handleDeleteCard } from '../actions/cards';
+import PropTypes from 'prop-types'
 
 class EditDeck extends Component {
 
@@ -136,6 +137,14 @@ function mapDispatchToProps(dispatch) {
         dispatchRenameDeck: (deckId, title) => dispatch(handleRenameDeck(deckId, title)),
         dispatchDeleteCard: (cardId) => dispatch(handleDeleteCard(cardId))
     }
+}
+
+EditDeck.propTypes = {
+    dispatchRenameDeck: PropTypes.func.isRequired,
+    deck: PropTypes.object.isRequired,
+    dispatchRenameDeck: PropTypes.func.isRequired,
+    dispatchDeleteCard: PropTypes.func.isRequired,
+    cards: PropTypes.object.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditDeck);

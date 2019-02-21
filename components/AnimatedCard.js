@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Animated, TouchableOpacity } from 'react-native'
 import styles from '../styles'
+import PropTypes from 'prop-types'
 
 class AnimatedCard extends Component {
     componentWillMount() {
@@ -63,7 +64,6 @@ class AnimatedCard extends Component {
 
 
     render() {
-        const { callback } = this.props
         const frontAnimatedStyle = {
             transform: [
                 { rotateY: this.frontInterpolate }
@@ -89,6 +89,10 @@ class AnimatedCard extends Component {
         )
 
     }
+}
+
+AnimatedCard.propTypes = {
+    children: PropTypes.array.isRequired
 }
 
 export default AnimatedCard;

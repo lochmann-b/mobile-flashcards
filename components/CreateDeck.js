@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import DeckTitle from './DeckTitle'
 import { View } from 'react-native'
-import styles from '../styles';
+import styles from '../styles'
 
 class CreateDeck extends Component {
 
