@@ -51,7 +51,7 @@ class Play extends Component {
         const cardCount = this.props.cards.length
         this.setState(current => {
             return {
-                finished: cardCount - 1 === current.cardIndex + 1,
+                finished: cardCount - 1 === current.cardIndex,
                 cardIndex: cardCount > current.cardIndex + 1 ? current.cardIndex + 1 : 0,
                 answered: current.answered + 1,
                 correctAnswered: knewIt === true ? current.correctAnswered + 1 : current.correctAnswered,
