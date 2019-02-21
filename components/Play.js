@@ -93,6 +93,9 @@ class Play extends Component {
 
         return (
             <View>
+                <Text style={styles.title}>
+                    {`Card ${cardIndex + 1}/${cards.length}`}
+                </Text>
                 <AnimatedCard ref={this.child}>
                     <CardTile question={currentCard.question} answer={currentCard.answer} faceUp={false} style={{ width: 220 }} />
                     <CardTile question={currentCard.question} answer={currentCard.answer} faceUp={true} style={{ width: 220 }} />

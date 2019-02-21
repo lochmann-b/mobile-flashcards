@@ -11,7 +11,8 @@ const styles = StyleSheet.create({
   title: {
     color: white,
     fontSize: 20,
-    margin: 5
+    margin: 5,
+    alignSelf: 'center',
   },
 
   form: {
