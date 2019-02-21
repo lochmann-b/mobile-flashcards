@@ -8,6 +8,8 @@ import {
 
 } from '../utils/api'
 
+import { loading } from '../actions/loading'
+
 export const RECEIVE_DECKS = 'RECEIVE_DECK'
 export const ADD_DECK = 'ADD_DECK'
 export const DELETE_DECK = 'DELETE_DECK'
@@ -46,16 +48,25 @@ function receiveDecks(decks) {
 
 export function handleLoadDecks() {
     return dispatch => {
+        dispatch(loading(true))
         return getAllDecks()
-            .then(decks => dispatch(receiveDecks(decks)))
+            .then(decks => {
+                dispatch(receiveDecks(decks))
+                dispatch(loading(false))
+            })
+
     }
 }
 
 
 export function handleLoadDummyDecks() {
     return dispatch => {
+        dispatch(loading(true))
         return loadInitialData()
-            .then(decks => dispatch(receiveDecks(decks)))
+            .then(decks => {
+                dispatch(receiveDecks(decks))
+                dispatch(loading(false))
+            })
     }
 }
 

@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 import TextButton from './TextButton';
 import { handleLoadDummyDecks } from '../actions/decks'
-import { Permissions,  } from 'expo'
+import { Permissions, } from 'expo'
 import { setLocalNotification, clearLocalNotifications, getLocalNotification } from '../utils/helpers'
 import PropTypes from 'prop-types'
+import { black } from '../styles'
 
 
 export class Settings extends Component {
-  
+
   state = {
     notificationsAllowed: '?',
     notification: false
@@ -17,11 +18,11 @@ export class Settings extends Component {
 
   updateState = () => {
     Permissions.getAsync(Permissions.NOTIFICATIONS)
-    .then(({status}) => {
-      this.setState({
-        notificationsAllowed: status
+      .then(({ status }) => {
+        this.setState({
+          notificationsAllowed: status
+        })
       })
-    })
     getLocalNotification().then(notification => {
       this.setState({
         notification: notification !== null
@@ -34,27 +35,28 @@ export class Settings extends Component {
   }
 
   render() {
-    const { dispatchLoadDecks, cardCount, deckCount, navigation } = this.props
+    const { dispatchLoadDecks, cardCount, deckCount, navigation, loading } = this.props
     return (
       <View style={styles.container}>
-          <Text style={styles.header}>{`Found ${cardCount} cards in ${deckCount} decks`}</Text>
-          <TextButton style={styles.resetAll} onPress={ () => navigation.navigate('ResetAll')}>
-            Reset Local Store
+        {loading && <ActivityIndicator size="large" color={black} />}
+        <Text style={styles.header}>{`Found ${cardCount} cards in ${deckCount} decks`}</Text>
+        <TextButton style={styles.resetAll} onPress={() => navigation.navigate('ResetAll')}>
+          Reset Local Store
           </TextButton>
-          <TextButton style={styles.load} onPress={() => dispatchLoadDecks()}>
-            Load Some Decks
+        <TextButton style={styles.load} onPress={() => dispatchLoadDecks()}>
+          Load Some Decks
           </TextButton>
-          <Text>
-            {`Notifications allowed: ${this.state.notificationsAllowed}`}
-          </Text>
-          <Text>
-            {`Notification is set: ${this.state.notification}`}
-          </Text>
-          <TextButton style={styles.load} onPress={() => clearLocalNotifications().then(this.updateState)}>
-            Clear Notifications
+        <Text>
+          {`Notifications allowed: ${this.state.notificationsAllowed}`}
+        </Text>
+        <Text>
+          {`Notification is set: ${this.state.notification}`}
+        </Text>
+        <TextButton style={styles.load} onPress={() => clearLocalNotifications().then(this.updateState)}>
+          Clear Notifications
           </TextButton>
-          <TextButton style={styles.load} onPress={() => setLocalNotification().then(this.updateState)}>
-            Set Notifications
+        <TextButton style={styles.load} onPress={() => setLocalNotification().then(this.updateState)}>
+          Set Notifications
           </TextButton>
 
       </View>
@@ -63,14 +65,16 @@ export class Settings extends Component {
 }
 
 
-function mapStateToProps ( { cards = {}, decks = {}  }) {
+function mapStateToProps({ cards = {}, decks = {}, loading }) {
   return {
     cardCount: Object.keys(cards).length,
-    deckCount: Object.keys(decks).length
+    deckCount: Object.keys(decks).length,
+    loading
   }
 }
 
-const mapDispatchToProps = (dispatch) => { 
+const mapDispatchToProps = (dispatch) => {
+  <ActivityIndicator size="large" color={black} />
   return {
     dispatchLoadDecks: () => dispatch(handleLoadDummyDecks())
   }
@@ -81,14 +85,14 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center'
   },
-  header:{
+  header: {
     fontSize: 20,
     alignSelf: 'center'
   },
 
   load: {
     padding: 10,
-    borderColor:"#ff0000",
+    borderColor: "#ff0000",
     backgroundColor: '#ffffff',
     margin: 10,
     width: 140,
@@ -98,7 +102,7 @@ const styles = StyleSheet.create({
 
   resetAll: {
     padding: 10,
-    borderColor:"#ff0000",
+    borderColor: "#ff0000",
     backgroundColor: '#ff7777',
     margin: 10,
     width: 140,

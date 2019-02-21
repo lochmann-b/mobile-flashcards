@@ -18,8 +18,6 @@ function getDeckOfCard(cardId) {
         })
 }
 
-
-
 export function reset() {
     return AsyncStorage.removeItem(STORAGE_KEY)
 }
@@ -95,14 +93,14 @@ export function removeCard(cardId) {
     return Promise.all([
         AsyncStorage.getItem(STORAGE_KEY),
         getDeckOfCard(cardId)])
-        .then( ([result, deck]) => {
+        .then(([result, deck]) => {
             const decks = JSON.parse(result)
             delete deck.cards[cardId]
-            AsyncStorage.setItem(STORAGE_KEY, JSON.stringify({ 
+            AsyncStorage.setItem(STORAGE_KEY, JSON.stringify({
                 ...decks,
-                [deck.id] : deck                
-             }))
-             return deck.id
+                [deck.id]: deck
+            }))
+            return deck.id
         })
-        
+
 }

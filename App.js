@@ -43,10 +43,12 @@ const Tabs = createBottomTabNavigator({
 })
 
 
-const ModalStack = createStackNavigator({
-  HomeStack: Tabs,
-  ResetAll: addMarginTop(ResetAll)
-}, {
+const ModalStack = createStackNavigator(
+  {
+    HomeStack: Tabs,
+    ResetAll: addMarginTop(ResetAll)
+  },
+  {
     mode: 'modal',
     headerMode: 'none'
   })
