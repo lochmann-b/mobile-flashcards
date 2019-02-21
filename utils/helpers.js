@@ -6,7 +6,6 @@ const NOTIFICATION_KEY = 'BL_MOBILE_FLASHCARDS_NOTIFICATIONS'
 
 export function normalizeDecks(originalData = {}) {
     originalData = originalData || {}
-    console.log('original data', originalData)
     const card = new schema.Entity('card')
     const decks = new schema.Entity('deck', {
         cards: [card]
@@ -25,35 +24,39 @@ export function clearLocalNotifications() {
 }
 
 export function setLocalNotification() {
-    AsyncStorage.getItem(NOTIFICATION_KEY)
+    return AsyncStorage.getItem(NOTIFICATION_KEY)
         .then(JSON.parse)
         .then((data) => {
             if (data === null) {
-                Permissions.askAsync(Permissions.NOTIFICATIONS)
-                    .then(({ status }) => {
-                        if (status === 'granted') {
-                            Notifications.cancelAllScheduledNotificationsAsync()
-                            let tomorrow = new Date()
-                            tomorrow.setDate(tomorrow.getDate() + 1)
-                            tomorrow.setHours(20)
-                            tomorrow.setMinutes(0)
-                            tomorrow.setSeconds(0)
-                            tomorrow.setMilliseconds(0)
-
-                            Notifications.scheduleLocalNotificationAsync(
-                                createNotification(),
-                                {
-                                    time: tomorrow,
-                                    repeat: 'day'
-                                }
-                            )
-                            console.log('Did set local notification for ', tomorrow)
-                            AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true))
-
-                        }
-                    })
+                return Permissions.askAsync(Permissions.NOTIFICATIONS)
             }
         })
+        .then((result) => {
+            if (result && result.status === 'granted') {
+                Notifications.cancelAllScheduledNotificationsAsync()
+                let tomorrow = new Date()
+                tomorrow.setDate(tomorrow.getDate() + 1)
+                tomorrow.setHours(20)
+                tomorrow.setMinutes(0)
+                tomorrow.setSeconds(0)
+                tomorrow.setMilliseconds(0)
+
+                Notifications.scheduleLocalNotificationAsync(
+                    createNotification(),
+                    {
+                        time: tomorrow,
+                        repeat: 'day'
+                    }
+                )
+                return AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true))
+            }
+        })
+        
+}
+
+export function getLocalNotification() {
+    return AsyncStorage.getItem(NOTIFICATION_KEY)
+        .then(JSON.parse)
 }
 
 export function createNotification() {

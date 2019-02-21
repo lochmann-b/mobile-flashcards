@@ -22,7 +22,6 @@ function addCard(card, deckId) {
 }
 
 function deleteCard(cardId, deckId) {
-    console.log('deleting card from ', deckId)
     return {
         type: DELETE_CARD,
         cardId,

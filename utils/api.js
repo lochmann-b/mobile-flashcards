@@ -37,7 +37,6 @@ export function getAllDecks() {
 
 export function updateCardWithId(cardId, question, answer) {
     return getDeckOfCard(cardId).then(deck => {
-        console.log('found deck ', deck)
         const newCard = Object.assign(deck.cards[cardId], { question, answer })
         deck.cards[cardId] = newCard
         AsyncStorage.mergeItem(STORAGE_KEY, JSON.stringify({ [deck.id]: deck }))
@@ -76,7 +75,6 @@ export function createCard(deckId, question, answer) {
     return AsyncStorage.getItem(STORAGE_KEY)
         .then(result => {
             const decks = JSON.parse(result)
-            console.log(deckId)
             decks[deckId].cards = {
                 ...decks[deckId].cards,
                 [newCard.id]: newCard

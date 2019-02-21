@@ -33,7 +33,6 @@ class ManageCard extends Component {
             navigation.goBack()
         }).catch(e => {
             const message = `${card ? 'Could not update card' : 'could not add card'}`
-            console.log(message, e)
             alert(message)
         })
     }
