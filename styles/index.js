@@ -112,8 +112,8 @@ const styles = StyleSheet.create({
   },
 
   infoText: {
-    margin: 20, 
-    color:'white',
+    margin: 20,
+    color: 'white',
     fontSize: 15
   },
 
@@ -125,7 +125,14 @@ const styles = StyleSheet.create({
     width: 120,
     borderWidth: 1,
     borderRadius: 2
+  },
+
+  horizontalButtonContainer: {
+    marginBottom: 10,
+    flexDirection: 'row',
+    justifyContent: 'center'
   }
+
 });
 
 export default styles
